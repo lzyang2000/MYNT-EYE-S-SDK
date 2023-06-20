@@ -15,7 +15,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 project(mynteye_samples VERSION 2.0.0 LANGUAGES C CXX)
-
+set(CMAKE_CXX_STANDARD 14)
 get_filename_component(PRO_DIR ${PROJECT_SOURCE_DIR} DIRECTORY)
 
 include(${PRO_DIR}/cmake/Common.cmake)

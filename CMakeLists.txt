@@ -15,7 +15,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 project(mynteye VERSION 2.5.0 LANGUAGES C CXX)
-
+set(CMAKE_CXX_STANDARD 14)
 include(cmake/Common.cmake)
 
 if(NOT CMAKE_DEBUG_POSTFIX)
