@@ -326,20 +326,21 @@ void Synthetic::InitProcessors() {
         std::make_shared<RectifyProcessorOCV>(intr_left_, intr_right_, extr_,
                                               RECTIFY_PROC_PERIOD);
     rectify_processor = rectify_processor_ocv;
-    points_processor = std::make_shared<PointsProcessor>(
-        rectify_processor_ocv -> getCameraROSMsgInfoPair(),
-        POINTS_PROC_PERIOD);
+
     auto disparity_processor_imp =
       std::make_shared<DisparityProcessor>(DisparityComputingMethod::BM,
                                            nullptr,
                                            DISPARITY_PROC_PERIOD);
+    disparity_processor = disparity_processor_imp;
+#ifdef WITH_CAM_MODELS
+    points_processor = std::make_shared<PointsProcessor>(
+        rectify_processor_ocv -> getCameraROSMsgInfoPair(),
+        POINTS_PROC_PERIOD);
     depth_processor = std::make_shared<DepthProcessor>(
         rectify_processor_ocv -> getCameraROSMsgInfoPair(),
         disparity_processor_imp->GetMinDisparity(),
         disparity_processor_imp->GetMaxDisparity(),
         DEPTH_PROC_PERIOD);
-    disparity_processor = disparity_processor_imp;
-#ifdef WITH_CAM_MODELS
   } else if (calib_model_ == CalibrationModel::KANNALA_BRANDT) {
     // KANNALA_BRANDT
     auto rectify_processor_imp =
